@@ -1,18 +1,14 @@
-﻿using System;
-using System.Runtime.InteropServices;
-
-namespace BumbleBeeLion
+﻿namespace BumbleBeeLion // Да-да я, а шо?
 {
-    public class Program
+    public class Program // Обязательный первичный класс объектов.
     {
-        public static void Main(string[] args)
+        public static void Main(string[] args) //Точка входа в программу, именно метод Main выполняется самым первым.
         {
-            WorkSpace workSpace = new WorkSpace();
+            WorkSpace workSpace = new WorkSpace(); // Создаём такую штуку, как "экземляр класса", в данном случае, класса WorkSpace.
             
-            workSpace.Space();
+            workSpace.Space(); // Обращаясь к экземляру класса запускаем метод этого класса Space(); В нём прописана вся логика.
+            // Почти всегда лучше писать главную логику в другом классе, тк работа в метода Main накладывает некоторые ограничения, как, например, перезапуск метода.
         }
-
-
-
     }
 }
+// Чтобы открыть другой clASS, нужно найти в Visual Studio "Обозреватель решений". Сделать это можно нажав сверху Вид->Обозреватель решений. Там находятся все ресурсы проекта.

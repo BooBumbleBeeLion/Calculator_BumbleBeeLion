@@ -1,104 +1,119 @@
 ﻿using System;
 
-namespace BumbleBeeLion
+namespace BumbleBeeLion // Да-да я, а шо?
 {
     class WorkSpace
-    {
+    {   // Заранее создаем все нужные переменные, чтобы иметь удобный доступ.
         string[] split;
         string input;
+        // Переменные разных типов разделяем строкой, тоже для удобства.
+        double result = 0; //Почему мы используем double, а не int? Потому что double с плавающей запятой и можно вычислять дробные числа.
 
-        double result = 0;
-        public  void Space()
+        public WorkSpace() // Заметили? Метод класса WorkSpace имеет такое же название, а ещё при его объявлении нет ключевого слова "void".
+        {                  // Такая конструкция называется "Конструктор класса". Он выполняется только один раз в обязательном порядке.
+
+            /* При обращении к классу WorkSpace запускается сначала конструктор, а уже потом метод Space
+            В этом конструкторе мы пропишем правила использования калькулятора. Дальше автоматически запустится метод Space()*/
+            Console.WriteLine("Калькулятор решает примеры любой длины при соблюдении условий записи\n" +
+                "-Записывайте весь пример в одну строку\n" +
+                "-Между числами и знаками операций обязательно ставьте ПРОБЕЛ\n" +
+                "-Когда запишете весь пример, поставьте через пробел знак равно =\n" +       // Знак "/n" означает перенос строки.
+                "Пример записи: '100 + 900 - 200 * 50 / 25 ='");
+        }
+
+        public void Space() // Объявление метода Space().
         {
-            Console.WriteLine("Введите полный пример, отделяя числа и знаки через пробел. Вводите только числа и знаки");
+            try //Блок try-catch предназначен для отлова ошибок. Изначально выполняется блок try, а уже если в нем произошла ошибка,
+            {                                                                                    // то выполнение блока try прекращается и запускается блок catch.
+                // Записываем пример в input.
+                input = Console.ReadLine(); 
 
-            try
-            {
-                input = Console.ReadLine(); // Convert.ToString(Console.Read())
+                //Команды, чтобы не было переноса строки. Сам хз как это работает.
+                Console.CursorTop--;
+                Console.CursorLeft = input.Length;
 
+                //Разделяем всю строку на массив чисел и знаков. Границами индексов являются пробелы.
                 split = input.Split(' ');
 
-                result = Convert.ToDouble(split[0]);
+                //В переменную result записываем самое первое число.
+                result = Convert.ToDouble(split[0]); //Происходит конвертация из типа string в тип double
             }
             catch
             {
-                Console.WriteLine("Нужно вводить пример корректно, соблюдайте правила ввода \n");
-                Space();
+                //Если произошла ошибка в прошлом коде, то будет выведен текст.
+                Console.WriteLine("\nНужно вводить пример корректно, соблюдайте правила ввода \n");
+                Space(); //Перезапуск метода Space.
             }
 
             try
             {
-                for(int i = 1; i < split.Length; i += 2)
-                {
-                    Console.WriteLine("Фор сработал i=" + i);
-                    switch (split[ i ])
+                for(int i = 1; i < split.Length; i += 2) // Цикл for с условием, нужным для логики обработки.Перескакивает числа, чтобы смотреть на знаки операций.
+                {                                        //Дело в том, что в разделенном массиве split НЕЧЁТНЫЕ индексы-это знаки операций,а ЧЁТНЫЕ-это сами числа
+                    switch (split[ i ]) //Проверка индекса [i] в массиве split
                     {
-                        case "+":
+                        case "+": // Если в этом индексе находится знак "+" то выполняется именно этот блок
                             try
-                            {
-                                result += Convert.ToDouble(split[ i + 1 ]);   //Convert.ToDouble(split[0]) , Convert.ToDouble(split[i + 1])
-                                Console.WriteLine(result);
+                            {       // Важно то, что переменная split имеет тип string, по-этому мы обязаны конвертировать его в double
+                                result += Convert.ToDouble(split[ i + 1 ]); // К переменной result, в котором уже находится самое первое число добавляется следующее за знаком.
                             }
-                            catch
-                            {
+                            catch // Если произойдет ошибка, то выполнится этот блок. Читайте про конструкцию "switch-case".
+                            { 
                                 Console.WriteLine("Не сложилось...");
-                                Space();
+                                Space(); //Перезапуск метода Space.
                             }
                             break;
-                        case "-":
+                        case "-": // по аналогии с кейсом "+".
                             try
                             {
-                                result -= Convert.ToDouble(split[i + 1]);   //Convert.ToDouble(split[0]) , Convert.ToDouble(split[i + 1])
-                                Console.WriteLine(result);
+                                result -= Convert.ToDouble(split[i + 1]);  // Если в примере встречается знак "-", то следующее число вычитается из result. 
                             }
                             catch
                             {
                                 Console.WriteLine("Не минусанулось...");
-                                Space();
+                                Space(); //Перезапуск метода Space.
                             }
                             break;
-                        case "*":
+                        case "*": // по аналогии с кейсом "+".
                             try
                             {
-                                result *= Convert.ToDouble(split[i + 1]);   //Convert.ToDouble(split[0]) , Convert.ToDouble(split[i + 1])
-                                Console.WriteLine(result);
+                                result *= Convert.ToDouble(split[i + 1]);  // Если в примере встречается знак "*", то вы уже поняли че происходит, чё я тут разжовываю.
                             }
                             catch
                             {
                                 Console.WriteLine("Не умножилось...");
-                                Space();
+                                Space(); //Перезапуск метода Space.
                             }
                             break;
-                        case "/":
+                        case "/": // по аналогии с кейсом "+".
                             try
                             {
-                                result /= Convert.ToDouble(split[i + 1]);   //Convert.ToDouble(split[0]) , Convert.ToDouble(split[i + 1])
-                                Console.WriteLine(result);
+                                result /= Convert.ToDouble(split[i + 1]);  // Если в примере встречается знак "/", то вы уже поняли че происходит, чё я тут разжовываю. 
                             }
                             catch
                             {
                                 Console.WriteLine("Не поделилось...");
-                                Space();
+                                Space(); //Перезапуск метода Space.
                             }
                             break;
                         case "=":
-                            //rezult += Convert.ToDouble(split[i - 1]);
-                            Console.WriteLine("Результат: " + result);
+                            Console.WriteLine(" " + result + "\nВводите следующий пример:"); // Когда в примере встречается знак "=", то выводится rezult, в котором проходили все операции.
                             break;
-                        default :
-                            Console.WriteLine("Канец Дефолт");
+                        default : //Обязательный блок default, который выполняется если не один из кейсов не срабатывает. Надо было правильно записывать пример.
+                            Console.WriteLine("Тяжко тебе, запиши пример нормально");
                             break;
                     }
                 }
-                result = 0;
-                Array.Clear(split , 0 , split.Length);
-                Space();
+                result = 0; // По окончанию цикла for и обработке примера мы обнуляем П̶У̶Т̶И̶Н̶А переменную result, чтобы не создавать конфликтов при слеюущих вычислениях
+
+                Array.Clear(split , 0 , split.Length); // Очищение массива split
+                Space(); //Перезапуск метода Space.
             }
-            catch
+            catch //Опять-таки если во всём блоке try возникла хоть одна ошибка, то GG.
             {
-                Console.WriteLine("Что-то пошло не так...2 \n");
-                Space();
+                Console.WriteLine("Вычисления не удалось выполнить \n");
+                Space();//Перезапуск метода Space.
             }
         }
     }
-}
+} //TODO Калькулятор еще не закончен, можно добавлять все остальные математические операции, но мне пока лень. 
+//Надеюсь пример этого кода с моими комментариями вам поможет, долго думал как реализовать. Без комментариев код выглядит не так страшно ахахах.

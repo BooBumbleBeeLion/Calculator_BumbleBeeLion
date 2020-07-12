@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
+//ЭТОТ КЛАСС УЖЕ НЕ НУЖЕН, ЭКСПЕРЕМЕНТИРОВАЛ С ЛОГИКОЙ КАЛЬКУЛЯТОРА
+
 
 namespace BumbleBeeLion
 {
