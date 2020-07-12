@@ -6,71 +6,51 @@ namespace BumbleBeeLion
 {
     public class Calc
     {
-        public double Summ(params double[] args)
+        public double result = 0;
+        double output = 0;
+        public double Summ(double number)   // условие params double[] args    double one, double two
         {
-            double rezult = 0;
-            double output = 0;
-
-            for (int i = 0; i < args.Length; i++)
+            /*for (int i = 0; i < args.Length; i++)
             {
                 rezult += args[i];
-            }
+            }*/
 
-            output = rezult;
-            rezult = 0;
+            result += number;
+
+            output = result;
+            result = 0;
 
             return output;
         }
 
-        public double Minus(params double[] args)
+        public double Minus(double number)
         {
-            double rezult = 0;
-            double output = 0;
-            rezult = args[0];
+            result -= number;
 
-            for (int i = 1; i < args.Length; i++)
-            {
-                rezult -= args[i];
-            }
-
-            output = rezult;
-            rezult = 0;
+            output = result;
+            result = 0;
 
             return output;
 
         }
 
-        public double Multiply(params double[] args)
+        public double Multiply(double number)
         {
-            double rezult = 0;
-            double output = 0;
-            rezult = args[0];
+            result *= number;
 
-            for (int i = 1; i < args.Length; i++)
-            {
-                rezult *= args[i];
-            }
-
-            output = rezult;
-            rezult = 0;
+            output = result;
+            result = 0;
 
             return output;
         }
 
 
-        public double Division(params double[] args)
+        public double Division(double number)
         {
-            double rezult = 0;
-            double output = 0;
-            rezult = args[0];
+            result /= number;
 
-            for (int i = 1; i < args.Length; i++)
-            {
-                rezult /= args[i];
-            }
-
-            output = rezult;
-            rezult = 0;
+            output = result;
+            result = 0;
 
             return output;
         }

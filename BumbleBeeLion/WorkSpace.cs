@@ -1,153 +1,104 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BumbleBeeLion
 {
     class WorkSpace
     {
-        int put = 0;
+        string[] split;
+        string input;
 
-        string cycle;
-        string stop;
-        
-        List<double> inputList = new List<double>();
-        double[] input = null;
-
-        public void Space()
+        double result = 0;
+        public  void Space()
         {
-            Calc calc = new Calc();
-
-            Console.WriteLine("Какое действие с числами вы хотите выполнить?");
-            Console.WriteLine("Если сложить, то напишите '1'");
-            Console.WriteLine("Если вычитать, то напишите '2'");
-            Console.WriteLine("Если умножить, то напишите '3'");
-            Console.WriteLine("Если разделить, то напишите '4'");
+            Console.WriteLine("Введите полный пример, отделяя числа и знаки через пробел. Вводите только числа и знаки");
 
             try
             {
-                put = Convert.ToInt32(Console.ReadLine());
+                input = Console.ReadLine(); // Convert.ToString(Console.Read())
+
+                split = input.Split(' ');
+
+                result = Convert.ToDouble(split[0]);
             }
             catch
             {
-                Console.WriteLine("Нужно вводить только целые числа \n");
+                Console.WriteLine("Нужно вводить пример корректно, соблюдайте правила ввода \n");
                 Space();
             }
 
-
-            if (put == 1)
+            try
             {
-                Console.WriteLine("Вводите все числа которые нужно сложить");
-                Console.WriteLine("Когда введёте все числа, напишите команду '=' без кавычек с новой строки");
-                Console.WriteLine("Вводите числа поочереди");
-
-                while (stop != "=")
+                for(int i = 1; i < split.Length; i += 2)
                 {
-                    cycle = Console.ReadLine();
-
-                    if (cycle == "=")
+                    Console.WriteLine("Фор сработал i=" + i);
+                    switch (split[ i ])
                     {
-                        break;
-                    }
-                    else
-                    {
-                        inputList.Add(Convert.ToDouble(cycle));
+                        case "+":
+                            try
+                            {
+                                result += Convert.ToDouble(split[ i + 1 ]);   //Convert.ToDouble(split[0]) , Convert.ToDouble(split[i + 1])
+                                Console.WriteLine(result);
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Не сложилось...");
+                                Space();
+                            }
+                            break;
+                        case "-":
+                            try
+                            {
+                                result -= Convert.ToDouble(split[i + 1]);   //Convert.ToDouble(split[0]) , Convert.ToDouble(split[i + 1])
+                                Console.WriteLine(result);
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Не минусанулось...");
+                                Space();
+                            }
+                            break;
+                        case "*":
+                            try
+                            {
+                                result *= Convert.ToDouble(split[i + 1]);   //Convert.ToDouble(split[0]) , Convert.ToDouble(split[i + 1])
+                                Console.WriteLine(result);
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Не умножилось...");
+                                Space();
+                            }
+                            break;
+                        case "/":
+                            try
+                            {
+                                result /= Convert.ToDouble(split[i + 1]);   //Convert.ToDouble(split[0]) , Convert.ToDouble(split[i + 1])
+                                Console.WriteLine(result);
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Не поделилось...");
+                                Space();
+                            }
+                            break;
+                        case "=":
+                            //rezult += Convert.ToDouble(split[i - 1]);
+                            Console.WriteLine("Результат: " + result);
+                            break;
+                        default :
+                            Console.WriteLine("Канец Дефолт");
+                            break;
                     }
                 }
-                cycle = "go";
-
-                input = inputList.ToArray();
-                inputList.Clear();
-
-                Console.WriteLine("Ответ по вашему запросу: " + calc.Summ(input));
+                result = 0;
+                Array.Clear(split , 0 , split.Length);
+                Space();
             }
-            else if (put == 2)
+            catch
             {
-                Console.WriteLine("Сначала введите уменьшаемое число, а дальше вычитаемое?");
-                Console.WriteLine("Когда введёте все числа, напишите команду '=' без кавычек с новой строки");
-                Console.WriteLine("Вводите числа поочереди");
-
-                while (stop != "=")
-                {
-                    cycle = Console.ReadLine();
-
-                    if (cycle == "=")
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        inputList.Add(Convert.ToDouble(cycle));
-                    }
-                }
-                cycle = "go";
-
-                input = inputList.ToArray();
-                inputList.Clear();
-
-                Console.WriteLine("Ответ по вашему запросу: " + calc.Minus(input));
+                Console.WriteLine("Что-то пошло не так...2 \n");
+                Space();
             }
-            else if (put == 3)
-            {
-                Console.WriteLine("Введите числа, которые хотите перемножить");
-                Console.WriteLine("Когда введёте все числа, напишите команду '=' без кавычек с новой строки");
-                Console.WriteLine("Вводите числа поочереди");
-
-                while (stop != "=")
-                {
-                    //input[i] = Convert.ToDouble(Console.ReadLine());
-                    cycle = Console.ReadLine();
-
-                    if (cycle == "=")
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        inputList.Add(Convert.ToDouble(cycle));
-                    }
-                }
-                cycle = "go";
-
-                input = inputList.ToArray();
-                inputList.Clear();
-
-                Console.WriteLine("Ответ по вашему запросу: " + calc.Multiply(input));
-            }
-            else if (put == 4)
-            {
-                Console.WriteLine("Сначала введите Делимое, а дальше Делители");
-                Console.WriteLine("Когда введёте все числа, напишите команду '=' без кавычек с новой строки");
-                Console.WriteLine("Вводите числа поочереди");
-
-                while (stop != "=")
-                {
-                    //input[i] = Convert.ToDouble(Console.ReadLine());
-                    cycle = Console.ReadLine();
-
-                    if (cycle == "=")
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        inputList.Add(Convert.ToDouble(cycle));
-                    }
-                }
-                cycle = "go";
-
-                input = inputList.ToArray();
-                inputList.Clear();
-
-                Console.WriteLine("Ответ по вашему запросу: " + calc.Division(input));
-            }
-            else Console.WriteLine("Такого решения пока что нет");
-
-            Console.WriteLine("");
-
-            Space();
-
-
         }
     }
 }
